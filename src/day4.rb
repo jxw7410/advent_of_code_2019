@@ -4,7 +4,6 @@
 # within the limits
 # two adjacent numbers are the same
 # from left to right digits are either the same or always increasing
-
 # part 1 brute force approach
 def find_possible_password(lower_limit, upper_limit)
   current_number = lower_limit
