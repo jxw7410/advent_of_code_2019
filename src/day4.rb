@@ -44,8 +44,6 @@ def is_reverse_sorted?(arr)
   true
 end
 
-#p find_possible_password(273025, 767253)
-
 # part II
 
 def find_possible_password_part_2(lower_limit, upper_limit)
@@ -71,5 +69,3 @@ def has_double_adjacent_value?(number)
   false 
 end
 
-
-p find_possible_password_part_2(273025, 767253)
