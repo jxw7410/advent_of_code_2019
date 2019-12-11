@@ -30,7 +30,7 @@ class Processor
       when "60"
         jump { |a, b| a == b }
       when "70"
-        equality { |a, b| a < b}
+        equality { |a, b| a < b }
       when "80"
         equality { |a, b| a == b }
       when "90"
@@ -105,17 +105,16 @@ class Processor
     end
   end
 
-  def equality( &proc )
+  def equality(&proc)
     val1 = get_target_address(1)
     val2 = get_target_address(2)
     if proc.call(val1, val2)
       set_target_address(3, 1)
     else
       set_target_address(3, 0)
-    end 
+    end
     self.index += 4
   end
-
 
   def read_input
     if @interactive
