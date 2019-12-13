@@ -1,3 +1,5 @@
+require "set"
+
 class Moon
   attr_accessor :name, :velocity, :axis
 
@@ -15,6 +17,19 @@ class Moon
       return self.axis[1]
     when "z"
       return self.axis[2]
+    else
+      raise "Invalid axis."
+    end
+  end
+
+  def get_velocity(axis)
+    case axis
+    when "x"
+      return self.velocity[0]
+    when "y"
+      return self.velocity[1]
+    when "z"
+      return self.velocity[2]
     else
       raise "Invalid axis."
     end
@@ -58,10 +73,9 @@ class Moon
   end
 end
 
-
 =begin
   Functions to solve the day's question
-=end 
+=end
 
 def run_gravity_field(moons)
   moons.each do |moon1|
@@ -97,6 +111,35 @@ def solve_part_one
   calculate_total_energy(moons)
 end
 
+def get_axis_repeat(axis, moons)
+  memo = Set.new()
+  count = 0
+  while true
+    run_gravity_field(moons)
+    combination = []
+    moons.each { |moon| combination << moon.pos(axis) }
+    moons.each { |moon| combination << moon.get_velocity(axis) }
+    return count if memo.include?(combination)
+    memo.add(combination)
+    count += 1
+  end
+end
+
+def lcm(num1, num2, num3)
+  lcm1 = (num1 * num2) / gcd(num1, num2)
+  (lcm1 * num3) / gcd(lcm1, num3)
+end
+
+def lcm(nums)
+  return false if nums.length <= 1
+  nums[1..-1].reduce(nums[0]) { |lcm, curr| lcm = (lcm * curr) / gcd(lcm, curr) }
+end
+
+def gcd(a, b)
+  return a if b == 0
+  gcd(b, a % b)
+end
+
 def solve_part_two
   moons = [
     Moon.new("Ganymede", [-8, -18, 6]),
@@ -104,13 +147,11 @@ def solve_part_two
     Moon.new("Europa", [8, -3, -10]),
     Moon.new("Callisto", [-2, -16, 1]),
   ]
-
-  i = 0
-  while true
-    run_gravity_field(moons)
-    
-    i += 1
-  end
+  px = get_axis_repeat("x", moons)
+  py = get_axis_repeat("y", moons)
+  pz = get_axis_repeat("z", moons)
+  lcm([px, py, pz])
 end
 
-p solve_part_one()
+#p solve_part_one()
+p solve_part_two()
