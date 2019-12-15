@@ -125,11 +125,6 @@ def get_axis_repeat(axis, moons)
   end
 end
 
-def lcm(num1, num2, num3)
-  lcm1 = (num1 * num2) / gcd(num1, num2)
-  (lcm1 * num3) / gcd(lcm1, num3)
-end
-
 def lcm(nums)
   return false if nums.length <= 1
   nums[1..-1].reduce(nums[0]) { |lcm, curr| lcm = (lcm * curr) / gcd(lcm, curr) }
