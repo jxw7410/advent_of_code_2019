@@ -15,7 +15,6 @@ class Processor
   end
 
   def process_instructions
-    return if @is_done 
     while self.index < memory.length
       self.instruction = format_instruction(memory[self.index])
       case (instruction[0..1])
@@ -43,7 +42,6 @@ class Processor
         raise "Instruction contains invalid opcode"
       end
     end
-    @is_done = true
     self.output
   end
 
